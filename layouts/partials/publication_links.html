@@ -6,19 +6,34 @@
   {{ i18n "btn_preprint" }}
 </a>
 {{ end }}
+
 {{ with $.Params.url_pdf }}
 <a class="btn btn-outline-primary my-1 mr-1{{ if $is_list }} btn-sm{{end}}" href="{{ . | relURL }}" target="_blank" rel="noopener">
   {{ i18n "btn_pdf" }}
 </a>
 {{ end }}
-{{ $directory := "static/files/citations/" }}
-{{ $filename := printf "%s%s.bib" $directory $.File.TranslationBaseName }}
+
+{{ $dirs := split $.File.Dir "/"}}
+{{ $len := len $dirs}}
+{{ $index := sub $len 2}}
+{{ $name := index $dirs $index }}
+{{ $filename := printf "%s%s.bib" $.File.Dir $name }}
 {{ if fileExists $filename }}
 <button type="button" class="btn btn-outline-primary my-1 mr-1{{ if $is_list }} btn-sm{{end}} js-cite-modal"
-        data-filename="{{ printf "files/citations/%s.bib" $.File.TranslationBaseName | relURL }}">
+        data-filename="{{ printf $filename | relURL }}">
   {{ i18n "btn_cite" }}
 </button>
 {{ end }}
+
+{{ $pdf := default "false" $.Params.file_pdf }}
+{{ if eq $pdf true }}
+{{ $pdffile := printf "%s%s.pdf" $.File.Dir $name}}
+<a class="btn btn-outline-primary my-1 mr-1{{ if $is_list }} btn-sm{{end}}" href="{{ printf $pdffile | relURL }}" target="_blank" rel="noopener">
+  {{ i18n "btn_pdf" }}
+</a>
+{{ end }}
+
+
 {{ with $.Params.url_code }}
 <a class="btn btn-outline-primary my-1 mr-1{{ if $is_list }} btn-sm{{end}}" href="{{ . | relURL }}" target="_blank" rel="noopener">
   {{ i18n "btn_code" }}

@@ -13,12 +13,13 @@
     {{ else if .Truncated }}
       {{ $summary = .Summary }}
     {{ end }}
+    {{ with .Params.stream_abstract }}
     {{ with $summary }}
     <div class="article-style" itemprop="articleBody">
       {{ . | truncate 135 }}
     </div>
     {{ end }}
-
+    {{ end }}
     <div class="stream-meta article-metadata">
       <div itemprop="author">
         {{ with .Params.authors }}

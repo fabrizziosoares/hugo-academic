@@ -88,9 +88,9 @@
 {{ end }}
 
 {{ with $.Params.gs_id }}
-	{{ range where $.Site.Data.citecount.table "id" "==" $.Params.gs_id }}
+	{{ range where $.Site.Data.citecount "id" "==" $.Params.gs_id }}
 		{{ if ge .citecount 1 }}
-			<a class="btn btn-outline-primary my-1 mr-1{{ if $is_list }} btn-sm{{end}}" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user={{ print $.Site.Params.scholar_id }}&citation_for_view={{ print $.Site.Params.scholar_id }}:{{ .id }}" target="_blank" rel="noopener">Cited by {{ .citecount }}</a>
+			<a class="btn btn-outline-primary my-1 mr-1{{ if $is_list }} btn-sm{{end}}" href="{{ .url }}" target="_blank" rel="noopener">Cited by {{ .citecount }}</a>
 		{{ end }}
 	{{end}}
 {{end}}
